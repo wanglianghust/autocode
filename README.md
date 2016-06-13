@@ -40,6 +40,15 @@ packagePrefix=com.test
 	src\webservice
 	
 #二次开发
-./properties/tsb/CommonTemplates.properties
-./templates/tsb/common/*
-                      模板文件
+```
+autocode/
+├── properties/tsb/
+│   ├── CommonTemplates.properties   对应模板路径
+│   ├── FileLocations.properties     模板对应文件所在目录
+│   ├── FileNames.properties         模板对应文件的格式
+│   └── generator.properties         初始化配置
+├── templates/tsb/common/
+    ├── Model.java.vm                模板
+    └── Mxml.xml.vm                  。。。
+
+```
