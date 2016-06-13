@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<libraryInfos>
+<libraryInfo home="C:\jdk1.5\jre" version="1.5.0_07">
+<bootpath>
+<entry path="C:\jdk1.5\jre\lib\rt.jar"/>
+<entry path="C:\jdk1.5\jre\lib\i18n.jar"/>
+<entry path="C:\jdk1.5\jre\lib\sunrsasign.jar"/>
+<entry path="C:\jdk1.5\jre\lib\jsse.jar"/>
+<entry path="C:\jdk1.5\jre\lib\jce.jar"/>
+<entry path="C:\jdk1.5\jre\lib\charsets.jar"/>
+<entry path="C:\jdk1.5\jre\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\jdk1.5\jre\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\jdk1.5\jre\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+<libraryInfo home="C:\jdk1.5" version="1.5.0_07">
+<bootpath>
+<entry path="C:\jdk1.5\jre\lib\rt.jar"/>
+<entry path="C:\jdk1.5\jre\lib\i18n.jar"/>
+<entry path="C:\jdk1.5\jre\lib\sunrsasign.jar"/>
+<entry path="C:\jdk1.5\jre\lib\jsse.jar"/>
+<entry path="C:\jdk1.5\jre\lib\jce.jar"/>
+<entry path="C:\jdk1.5\jre\lib\charsets.jar"/>
+<entry path="C:\jdk1.5\jre\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\jdk1.5\jre\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\jdk1.5\jre\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>

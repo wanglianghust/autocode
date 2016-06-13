@@ -1,0 +1,312 @@
+## This is an the velocity template
+## to generate a model class from an sql table input
+#set ($table = $sqlTable.Table.toLowerCase())
+#set ($class = $utility.makeClassName($sqlTable.Table))
+#set ($pojoClass = $sqlTable.EntityName)
+#set ($classVar = $utility.makeFirstLetterLowerCase($class))
+#set ($pojoClassVar = $utility.makeFirstLetterLowerCase($pojoClass))
+#set ($packagePrefix  = $prop.getProperty("packagePrefix"))
+#set ($packageModot  = $prop.getProperty("packageModot"))
+#set ($keyColumn = $sqlTable.getPrimaryKey(0))
+#set ($mailId    = $prop.getProperty("mailId"))
+#set ($mailName  = $prop.getProperty("mailName"))
+#set ($keyGenerated = "N")
+/**
+ #parse( "copyright_file.vm" )
+ 
+ * 文件名称: C2S${pojoClass}.java 
+ * 设计作者: 
+ * 完成日期: 
+ * 内容摘要:
+ *
+ * 修改记录: 
+ * 修改日期:
+ * 修 改 人:
+ * 修改内容:
+ */
+package ${packagePrefix}.webservice.c2sbean;
+
+import java.io.Serializable;
+#if ($sqlTable.hasCompositeKey)
+import java.util.Map;
+import java.util.HashMap;
+#end
+import com.tsb.ischool.framework.common.ErrorCode;
+import com.tsb.ischool.framework.exception.ISchoolException;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+/**
+* 类 名 称：C2S${pojoClass}
+* 内容摘要：
+* 完成日期：
+* 编码作者：
+*/
+public class C2S${pojoClass} implements Serializable 
+{
+
+#foreach( $column in $sqlTable.sqlColumns)
+#if ($column.isKey())
+#if ($sqlTable.hasCompositeKey)
+#if ($keyGenerated.equals("N"))
+    /**
+     *联合主键类${pojoClass}PK，
+     *对应表[$table.toUpperCase()]的主键
+     */
+    protected ${pojoClass}PK ${pojoClassVar}PK = new ${pojoClass}PK();
+#set ($keyGenerated = "Y")
+#end
+#else
+    /** 
+     *PRIMARY KEY,对应表[$table.toUpperCase()]的主键$column.Colname
+     */
+    private $column.attType $column.attName;//主键
+#end
+#else
+#############################################################
+## Skip generation of attribute if it is an attribute that
+## is in the imported keys of this table
+#############################################################
+#if (!$sqlTable.getHasImportedKeyParentColumn($column.colname))
+
+    /** 
+     *对应表[$table.toUpperCase()]的字段$column.Colname
+     */
+	private $column.attType $column.attName;//$column.comment
+#end
+#end
+#end
+
+    private int curpage;//当前页码
+	private int pagesize;//每页个数
+	
+	public boolean verify() throws ISchoolException {
+		if (null == this) {
+			throw new ISchoolException(ErrorCode.ISCHOOL_REQBODY_INVALID_MSGTYPE, "参数错误，入参为空。");
+		}
+		return true;
+	}
+	
+	public int getCurpage() {
+		return curpage;
+	}
+
+	public void setCurpage(int curpage) {
+		this.curpage = curpage;
+	}
+
+	public int getPagesize() {
+		return pagesize;
+	}
+
+	public void setPagesize(int pagesize) {
+		this.pagesize = pagesize;
+	}
+
+
+
+
+##########################################
+##  Foreign Imported Keys declaration generation
+##########################################
+#foreach ($foreignKey in $sqlTable.importedKeys.associatedTables.orderedValues)
+#set ($fkSqlTable = $foreignKey.sqlTable)
+#set ($fkTable    = $fkSqlTable.Table.toLowerCase())
+#set ($fkClass    = $utility.makeClassName($fkSqlTable.Table))
+#set ($fkClassVar = $utility.makeFirstLetterLowerCase($fkClass))
+#set ($fkPojoClass = $utility.makeClassName($fkSqlTable.EntityName))
+#set ($fkPojoClassVar = $utility.makeFirstLetterLowerCase($fkPojoClass))
+#set ($fkProps    = $utility.getResolvedProperties($fkSqlTable))
+#set ($fkPackageModot  = $fkProps.get("packageModot"))
+#set ($fkPackagePrefix   = $fkProps.get("packagePrefix"))
+##########################################
+##  xxx to one ForeignKey generation 
+##########################################
+#if ($foreignKey.secondRelation.equals("many"))
+	protected java.util.Set ${fkPojoClassVar}Group = new java.util.HashSet();
+#else
+
+    /**
+     *当前表有外键(FOREIGN KEY)指向表[$fkTable.toUpperCase()]，
+     *这是${fkPojoClass}的实体对象
+	 */
+	protected ${fkPackagePrefix}.access${fkPackageModot}.model.${fkPojoClass} ${fkPojoClassVar};	
+#end
+#end
+
+###############################################
+##  Foreign Exported Keys declaration generation
+###############################################
+#foreach ($foreignKey in $sqlTable.exportedKeys.associatedTables.orderedValues)
+#set ($fkSqlTable = $foreignKey.sqlTable)
+#set ($fkTable    = $fkSqlTable.Table.toLowerCase())
+#set ($fkClass    = $utility.makeClassName($fkSqlTable.Table))
+#set ($fkClassVar = $utility.makeFirstLetterLowerCase($fkClass))
+#set ($fkPojoClass = $utility.makeClassName($fkSqlTable.EntityName))
+#set ($fkPojoClassVar = $utility.makeFirstLetterLowerCase($fkPojoClass))
+#set ($fkProps    = $utility.getResolvedProperties($fkSqlTable))
+#set ($fkPackageModot  = $fkProps.get("packageModot"))
+#set ($fkPackagePrefix   = $fkProps.get("packagePrefix"))
+##########################################
+##  xxx to one ForeignKey generation 
+##########################################
+#if ($foreignKey.secondRelation.equals("many"))
+    /**
+     *在表[$fkTable.toUpperCase()]中有外键指向当前表，
+     *${fkPojoClassVar}Group是${fkPojoClass}实体对象的集合
+	 */
+	protected java.util.Set ${fkPojoClassVar}Group = new java.util.HashSet();
+#else
+	protected ${fkPackagePrefix}.access${fkPackageModot}.model.${fkPojoClass} ${fkPojoClassVar};	
+#end
+#end
+  
+    
+#foreach( $column in $sqlTable.sqlColumns)
+  /**
+	*
+	* @return $column.attType
+	*/
+	public $column.attType get${column.attNameUC}() 
+	{
+#if ($column.isKey())
+#if ($sqlTable.hasCompositeKey)
+		return this.get${pojoClass}PK().get${column.attNameUC}();
+#else
+		return this.$column.attName;
+#end
+#else
+#######################################################################
+## generate getter for a foreign key column from the associated entity
+########################################################################
+#if ($sqlTable.getHasImportedKeyParentColumn($column.colname))
+#set ($fkey = $sqlTable.getImportedKeyParentColumn($column.colname))
+#set ($fkeyTable = $fkey.getTableName())
+#set ($fkeyCol   = $fkey.getColumn($column.colname))
+#set ($fkeyVar   = $utility.makeClassName($fkeyCol))
+#set ($fkeyClass = $utility.makeClassName($fkeyTable))
+#set ($fkSqlTable = $prop.getSqlTable($fkeyTable))
+#set ($fkPojoClass = $utility.makeClassName($fkSqlTable.EntityName))
+#set ($fkPojoClassVar = $utility.makeFirstLetterLowerCase($fkPojoClass))
+		return this.get${fkPojoClass}().get${fkeyVar}();
+#else
+		return this.$column.attName;
+#end
+#end
+	}
+	
+  /**
+	* Set the $column.attName
+	*/	
+	public void set${column.attNameUC}(${column.attType} aValue) 
+	{
+#if ($column.isKey())
+#######################################################################
+## generate setter for a foreign key column from the associated entity
+########################################################################
+#if ($sqlTable.getHasImportedKeyParentColumn($column.colname))
+#set ($fkey = $sqlTable.getImportedKeyParentColumn($column.colname))
+#set ($fkeyTable = $fkey.getTableName())
+#set ($fkeyCol   = $fkey.getColumn($column.colname))
+#set ($fkeyVar   = $utility.makeClassName($fkeyCol))
+#set ($fkeyClass = $utility.makeClassName($fkeyTable))
+#set ($fkSqlTable = $prop.getSqlTable($fkeyTable))
+#set ($fkPojoClass = $utility.makeClassName($fkSqlTable.EntityName))
+#set ($fkPojoClassVar = $utility.makeFirstLetterLowerCase($fkPojoClass))
+		this.get${fkPojoClass}().set${fkeyVar}(aValue);
+#end
+#if ($sqlTable.hasCompositeKey)
+		this.get${pojoClass}PK().set${column.attNameUC}(aValue);
+#else
+		this.$column.attName = aValue;
+#end
+#else
+#######################################################################
+## generate setter for a foreign key column from the associated entity
+########################################################################
+#if ($sqlTable.getHasImportedKeyParentColumn($column.colname))
+#set ($fkey = $sqlTable.getImportedKeyParentColumn($column.colname))
+#set ($fkeyTable = $fkey.getTableName())
+#set ($fkeyCol   = $fkey.getColumn($column.colname))
+#set ($fkeyVar   = $utility.makeClassName($fkeyCol))
+#set ($fkeyClass = $utility.makeClassName($fkeyTable))
+#set ($fkSqlTable = $prop.getSqlTable($fkeyTable))
+#set ($fkPojoClass = $utility.makeClassName($fkSqlTable.EntityName))
+#set ($fkPojoClassVar = $utility.makeFirstLetterLowerCase($fkPojoClass))
+		this.get${fkPojoClass}().set${fkeyVar}(aValue);
+#else
+		this.$column.attName = aValue;
+#end
+#end
+	}	
+#end
+  
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() 
+	{
+		return new ToStringBuilder(this)
+		#foreach( $column in $sqlTable.sqlColumns)
+#if ($column.isKey())
+#if ($sqlTable.hasCompositeKey)
+		.append("$column.attName", this.${pojoClassVar}PK.$column.attName) 
+#else
+		.append("$column.attName", this.$column.attName) 
+#end
+#else
+#if (!$sqlTable.getHasImportedKeyParentColumn($column.colname))
+		.append("$column.attName", this.$column.attName) 
+#end
+#end
+		#end
+		.append("curpage", this.curpage).append("pagesize", this.pagesize) 
+		.toString();
+	}
+
+   /**
+	 * Return the name of the first key column
+	 */
+#set ($keyname = $utility.makeVarName($keyColumn.colname))
+	public String getFirstKeyColumnName() 
+	{
+		return "$keyname";
+	}
+	
+#if ($sqlTable.hasCompositeKey)
+   /**
+	 * Return the primary key as a hashmap
+	 */
+	public Map getPrimaryKeyMap() 
+	{
+		
+		Map pkMap = new HashMap();
+#foreach( $column in $sqlTable.primaryKeys)
+#set ($keyname = $utility.makeVarName($column.colname))
+#set ($keynameUC = $utility.makeFirstLetterUpperCase($keyname))
+	    pkMap.put("$keyname",   this.get${keynameUC}());
+#end
+		return pkMap;
+	}
+   /**
+	 * Return the primary key String as key value pairs
+	 */
+	public String getPrimaryKeyString()
+	{
+		
+		java.lang.StringBuffer pkeyString = new java.lang.StringBuffer("[");
+#set ($incomma="N")
+#foreach( $column in $sqlTable.primaryKeys)
+#set ($keyname = $utility.makeVarName($column.colname))
+#set ($keynameUC = $utility.makeFirstLetterUpperCase($keyname))
+#if ($incomma.equals("Y"))
+		pkeyString.append(",");
+#end
+	    pkeyString.append("$keyname=");
+	    pkeyString.append(this.get${keynameUC}());
+#set ($incomma="Y")
+#end
+	    pkeyString.append("]");
+		return pkeyString.toString();
+	}
+#end
+}

@@ -1,0 +1,191 @@
+## This is a velocity template
+## to generate a model class from an sql table input
+#set ($table = $sqlTable.Table)
+#set ($class = $sqlTable.EntityName)
+#set ($classVar = $utility.makeFirstLetterLowerCase($class))
+#set ($packagePrefix  = $prop.getProperty("packagePrefix"))
+#set ($packageModot  = $prop.getProperty("packageModot"))
+#set ($keyfield = $sqlTable.getPrimaryKey(0).getColname())
+#set ($keytype  = $sqlTable.getPrimaryKey(0).getAttType())
+#set ($keyVar= $utility.makeVarName($keyfield))
+#set ($keyVarUC = $utility.makeFirstLetterUpperCase($keyVar))
+#set ($appname  = $prop.getProperty("appname"))
+/**
+ #parse( "copyright_file.vm" )
+ 
+ * 文件名称: ${class}Rest.java 
+ * 设计作者: 
+ * 完成日期: 
+ * 内容摘要:
+ *
+ * 修改记录: 
+ * 修改日期:
+ * 修 改 人:
+ * 修改内容:
+ */
+package ${packagePrefix}.webservice;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import ${packagePrefix}.model.${class};
+import ${packagePrefix}.service.I${class}Service;
+import ${packagePrefix}.webservice.c2sbean.C2S${class};
+import com.tsb.ischool.framework.bean.comm.PageBean;
+import com.tsb.ischool.framework.bean.comm.ResultBean;
+import com.tsb.ischool.framework.common.ErrorCode;
+import com.tsb.ischool.framework.common.ISchoolConstants;
+import com.tsb.ischool.framework.exception.ISchoolException;
+import com.tsb.ischool.utils.UuidUtil;
+
+/**
+ * 类 编 号： 
+ * 类 名 称：${class}Rest
+ * 内容摘要：
+ * 完成日期：
+ * 编码作者：
+ */
+@Controller
+@Path("/$class.toLowerCase()")
+public class ${class}Rest
+{
+ 
+    private Logger logger = Logger.getLogger(${class}Rest.class);
+	@Resource
+	private I${class}Service ${classVar}Service;
+
+	private void log(String message) {
+		String operation = ISchoolConstants.LOGGER_PREFIX_INFO + "THREADID = "
+				+ Thread.currentThread().getId() + ".|"+this.getClass().getName()+"." + message
+				+ ".|";
+		logger.info(operation);
+	}
+	
+	/**
+	 * 新增或者编辑保存${class}
+	 * @throws ISchoolException
+	 */
+	@POST
+	@Path("/insertorupdate")
+	@Consumes(value = { MediaType.APPLICATION_JSON })
+	@Produces(value = { MediaType.APPLICATION_JSON })
+	public ResultBean insertorupdate(${class} bean,@Context HttpServletRequest request) throws ISchoolException {
+		int i = 0;
+		if(bean.get${keyVarUC}()==null){
+			bean.set${keyVarUC}(UuidUtil.generateUUID());
+			i = ${classVar}Service.insert(bean);
+		}else{
+			i = ${classVar}Service.update(bean);
+		}
+		return new ResultBean(ResultBean.CODE_SUCCESS, 0, i, "");
+	}
+	
+	/**
+	 * 删除${class}
+	 * @throws ISchoolException
+	 */
+	@POST
+	@Path("/delete")
+	@Consumes(value = { MediaType.APPLICATION_JSON })
+	@Produces(value = { MediaType.APPLICATION_JSON })
+	public ResultBean delete(${class} bean,@Context HttpServletRequest request) throws ISchoolException {
+		int i = 0;
+		if(bean.get${keyVarUC}()!=null){
+			i = ${classVar}Service.deleteById(bean.get${keyVarUC}());
+		}
+		return new ResultBean(ResultBean.CODE_SUCCESS, 0, i, "");
+	}
+	
+	/**
+	 * 逻辑删除${class}
+	 * @throws ISchoolException
+	 */
+	@POST
+	@Path("/deletelogic")
+	@Consumes(value = { MediaType.APPLICATION_JSON })
+	@Produces(value = { MediaType.APPLICATION_JSON })
+	public ResultBean deletelogic(${class} bean,@Context HttpServletRequest request) throws ISchoolException {
+		int i = 0;
+		if(bean.get${keyVarUC}()!=null){
+			i = ${classVar}Service.deletelogicById(bean.get${keyVarUC}());
+		}
+		return new ResultBean(ResultBean.CODE_SUCCESS, 0, i, "");
+	}
+	
+	/**
+	 * 通过id查询${class}详细
+	 * 
+	 * @throws ISchoolException
+	 */
+	@POST
+	@Path("/querybyid")
+	@Consumes(value = { MediaType.APPLICATION_JSON })
+	@Produces(value = { MediaType.APPLICATION_JSON })
+	public ResultBean querybyid(${class} bean)
+			throws ISchoolException {
+		String opration = ISchoolConstants.LOGGER_PREFIX_DEBUG + "THREADID = "
+				+ Thread.currentThread().getId() + ".|通过id查询${class}详细.";
+		logger.debug(opration + "| 开始校验参数 | ${class}="
+				+ bean.toString());
+		if (bean.verify()) {
+			${class}  ${classVar} = ${classVar}Service.queryById(bean.get${keyVarUC}());
+			logger.debug(opration + "| 完成查询 | =${class}"
+					+ ${classVar});
+			return new ResultBean(ResultBean.CODE_SUCCESS, 0,${classVar}, "");
+		}
+		return new ResultBean(ResultBean.CODE_ERROR,
+				ErrorCode.ISCHOOL_REQJSON_PARSEMSG_EXCEPTION, 1, "");
+	}
+	
+	/**
+	 * 查询${class}
+	 * 
+	 * @throws ISchoolException
+	 */
+	@POST
+	@Path("/query")
+	@Consumes(value = { MediaType.APPLICATION_JSON })
+	@Produces(value = { MediaType.APPLICATION_JSON })
+	public ResultBean query(C2S${class} bean)
+			throws ISchoolException {
+		String opration = ISchoolConstants.LOGGER_PREFIX_DEBUG + "THREADID = "
+				+ Thread.currentThread().getId() + ".|获取${class}列表.";
+		logger.debug(opration + "| 开始校验参数 | bean="
+				+ bean.toString());
+		if (bean.verify()) {
+			PageBean<${class}> list = ${classVar}Service
+					.query(bean);
+			logger.debug(opration + "| 完成查询 | =${class}"
+					+ list);
+			return new ResultBean(ResultBean.CODE_SUCCESS, 0,list, "");
+		}
+		return new ResultBean(ResultBean.CODE_ERROR,
+				ErrorCode.ISCHOOL_REQJSON_PARSEMSG_EXCEPTION, 1, "");
+	}
+	
+	/**
+	 * 排序保存接口
+	 * @throws ISchoolException
+	 */
+	//@POST
+	//@Path("/setordernum")
+	//@Consumes(value = { MediaType.APPLICATION_JSON })
+	//@Produces(value = { MediaType.APPLICATION_JSON })
+	//public ResultBean setordernum(${class} bean,@Context HttpServletRequest request) throws ISchoolException {
+	//	int i = 0;
+	//	if(bean.get${keyVarUC}()!=null&&bean.getOrdernum()!=null&&bean.getOrdernum().intValue()>0){
+	//		i = ${classVar}Service.update(bean);
+	//	}
+	//	return new ResultBean(ResultBean.CODE_SUCCESS, 0, i, "");
+	//}
+
+	
+ 	
+}

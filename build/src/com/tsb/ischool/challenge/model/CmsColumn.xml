@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CmsColumn">
+   <sql id="dynamicWhere">
+			<where>
+                1=1
+		       <if test="cSid != null"> and C_SID=#{cSid}</if>
+				 <if test="cName != null"> and C_NAME=#{cName}</if>
+				 <if test="cLevel != null"> and C_LEVEL=#{cLevel}</if>
+				 <if test="cSort != null"> and C_SORT=#{cSort}</if>
+				 <if test="cDesc != null"> and C_DESC=#{cDesc}</if>
+				 <if test="cParentid != null"> and C_PARENTID=#{cParentid}</if>
+				 <if test="cUrl != null"> and C_URL=#{cUrl}</if>
+				 <if test="cCityid != null"> and C_CITYID=#{cCityid}</if>
+				 <if test="cCityname != null"> and C_CITYNAME=#{cCityname}</if>
+				 <if test="cAreaid != null"> and C_AREAID=#{cAreaid}</if>
+				 <if test="cAreaname != null"> and C_AREANAME=#{cAreaname}</if>
+				 <if test="cSchoolid != null"> and C_SCHOOLID=#{cSchoolid}</if>
+				 <if test="cSchoolname != null"> and C_SCHOOLNAME=#{cSchoolname}</if>
+				 <if test="cIsuse != null"> and C_ISUSE=#{cIsuse}</if>
+				 <if test="cSummary1 != null"> and C_SUMMARY1=#{cSummary1}</if>
+				 <if test="cSummary2 != null"> and C_SUMMARY2=#{cSummary2}</if>
+				 <if test="cSummary3 != null"> and C_SUMMARY3=#{cSummary3}</if>
+				 <if test="cCreatorid != null"> and C_CREATORID=#{cCreatorid}</if>
+				 <if test="cCreatetime != null"> and C_CREATETIME=#{cCreatetime}</if>
+				 <if test="cStaticurl != null"> and C_STATICURL=#{cStaticurl}</if>
+				 <if test="cIstatic != null"> and C_ISTATIC=#{cIstatic}</if>
+				 <if test="cPagetype != null"> and C_PAGETYPE=#{cPagetype}</if>
+				 <if test="cIshome != null"> and C_ISHOME=#{cIshome}</if>
+				 <if test="cHomepos != null"> and C_HOMEPOS=#{cHomepos}</if>
+				</where>
+	</sql>
+		
+	<sql id="dynamicSet">
+		<set>
+						     						<if test="cName != null" > 
+			  C_NAME=#{cName},
+			</if>
+				     						<if test="cLevel != null" > 
+			  C_LEVEL=#{cLevel},
+			</if>
+				     						<if test="cSort != null" > 
+			  C_SORT=#{cSort},
+			</if>
+				     						<if test="cDesc != null" > 
+			  C_DESC=#{cDesc},
+			</if>
+				     						<if test="cParentid != null" > 
+			  C_PARENTID=#{cParentid},
+			</if>
+				     						<if test="cUrl != null" > 
+			  C_URL=#{cUrl},
+			</if>
+				     						<if test="cCityid != null" > 
+			  C_CITYID=#{cCityid},
+			</if>
+				     						<if test="cCityname != null" > 
+			  C_CITYNAME=#{cCityname},
+			</if>
+				     						<if test="cAreaid != null" > 
+			  C_AREAID=#{cAreaid},
+			</if>
+				     						<if test="cAreaname != null" > 
+			  C_AREANAME=#{cAreaname},
+			</if>
+				     						<if test="cSchoolid != null" > 
+			  C_SCHOOLID=#{cSchoolid},
+			</if>
+				     						<if test="cSchoolname != null" > 
+			  C_SCHOOLNAME=#{cSchoolname},
+			</if>
+				     						<if test="cIsuse != null" > 
+			  C_ISUSE=#{cIsuse},
+			</if>
+				     						<if test="cSummary1 != null" > 
+			  C_SUMMARY1=#{cSummary1},
+			</if>
+				     						<if test="cSummary2 != null" > 
+			  C_SUMMARY2=#{cSummary2},
+			</if>
+				     						<if test="cSummary3 != null" > 
+			  C_SUMMARY3=#{cSummary3},
+			</if>
+				     						<if test="cCreatorid != null" > 
+			  C_CREATORID=#{cCreatorid},
+			</if>
+				     						<if test="cCreatetime != null" > 
+			  C_CREATETIME=#{cCreatetime},
+			</if>
+				     						<if test="cStaticurl != null" > 
+			  C_STATICURL=#{cStaticurl},
+			</if>
+				     						<if test="cIstatic != null" > 
+			  C_ISTATIC=#{cIstatic},
+			</if>
+				     						<if test="cPagetype != null" > 
+			  C_PAGETYPE=#{cPagetype},
+			</if>
+				     						<if test="cIshome != null" > 
+			  C_ISHOME=#{cIshome},
+			</if>
+				     						<if test="cHomepos != null" > 
+			  C_HOMEPOS=#{cHomepos},
+			</if>
+				     		</set>
+	</sql>
+	
+	<sql id="allColumn">
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+						<if test="cSid != null"> C_SID,</if>
+						<if test="cName != null"> C_NAME,</if>
+						<if test="cLevel != null"> C_LEVEL,</if>
+						<if test="cSort != null"> C_SORT,</if>
+						<if test="cDesc != null"> C_DESC,</if>
+						<if test="cParentid != null"> C_PARENTID,</if>
+						<if test="cUrl != null"> C_URL,</if>
+						<if test="cCityid != null"> C_CITYID,</if>
+						<if test="cCityname != null"> C_CITYNAME,</if>
+						<if test="cAreaid != null"> C_AREAID,</if>
+						<if test="cAreaname != null"> C_AREANAME,</if>
+						<if test="cSchoolid != null"> C_SCHOOLID,</if>
+						<if test="cSchoolname != null"> C_SCHOOLNAME,</if>
+						<if test="cIsuse != null"> C_ISUSE,</if>
+						<if test="cSummary1 != null"> C_SUMMARY1,</if>
+						<if test="cSummary2 != null"> C_SUMMARY2,</if>
+						<if test="cSummary3 != null"> C_SUMMARY3,</if>
+						<if test="cCreatorid != null"> C_CREATORID,</if>
+						<if test="cCreatetime != null"> C_CREATETIME,</if>
+						<if test="cStaticurl != null"> C_STATICURL,</if>
+						<if test="cIstatic != null"> C_ISTATIC,</if>
+						<if test="cPagetype != null"> C_PAGETYPE,</if>
+						<if test="cIshome != null"> C_ISHOME,</if>
+						<if test="cHomepos != null"> C_HOMEPOS,</if>
+				</trim>
+	</sql>
+	
+	<sql id="allColumnVar">
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    			<if test="cSid != null"> #{cSid},</if>
+						<if test="cName != null"> #{cName},</if>
+						<if test="cLevel != null"> #{cLevel},</if>
+						<if test="cSort != null"> #{cSort},</if>
+						<if test="cDesc != null"> #{cDesc},</if>
+						<if test="cParentid != null"> #{cParentid},</if>
+						<if test="cUrl != null"> #{cUrl},</if>
+						<if test="cCityid != null"> #{cCityid},</if>
+						<if test="cCityname != null"> #{cCityname},</if>
+						<if test="cAreaid != null"> #{cAreaid},</if>
+						<if test="cAreaname != null"> #{cAreaname},</if>
+						<if test="cSchoolid != null"> #{cSchoolid},</if>
+						<if test="cSchoolname != null"> #{cSchoolname},</if>
+						<if test="cIsuse != null"> #{cIsuse},</if>
+						<if test="cSummary1 != null"> #{cSummary1},</if>
+						<if test="cSummary2 != null"> #{cSummary2},</if>
+						<if test="cSummary3 != null"> #{cSummary3},</if>
+						<if test="cCreatorid != null"> #{cCreatorid},</if>
+						<if test="cCreatetime != null"> #{cCreatetime},</if>
+						<if test="cStaticurl != null"> #{cStaticurl},</if>
+						<if test="cIstatic != null"> #{cIstatic},</if>
+						<if test="cPagetype != null"> #{cPagetype},</if>
+						<if test="cIshome != null"> #{cIshome},</if>
+						<if test="cHomepos != null"> #{cHomepos},</if>
+				</trim>
+	</sql>
+	
+	<insert id="insert"  parameterType="com.tsb.ischool.challenge.model.CmsColumn">
+		insert into t_cms_column
+		<include refid="allColumn"/>
+		<include refid="allColumnVar"/>
+	</insert>
+	
+	<update id="update" parameterType="com.tsb.ischool.challenge.model.CmsColumn">
+	     update t_cms_column
+	     <include refid="dynamicSet"/>
+	     where C_SID=#{cSid}
+	</update>
+	
+	<select id="queryById" parameterType="String" resultType="com.tsb.ischool.challenge.model.CmsColumn" >
+		select 
+			*
+		from 
+			t_cms_column 
+		where C_SID=#{value}
+	</select>
+	
+	<select id="query" parameterType="com.tsb.ischool.challenge.webservice.c2sbean.C2SCmsColumn" resultType="com.tsb.ischool.challenge.model.CmsColumn">
+		select 
+			*
+		from
+			 t_cms_column 
+		<include refid="dynamicWhere"/>
+	</select>
+	
+	<select id="query_count" parameterType="com.tsb.ischool.challenge.webservice.c2sbean.C2SCmsColumn" resultType="int">
+		select 
+			count(1)
+		from 
+			t_cms_column
+		<include refid="dynamicWhere"/>
+	</select>
+	
+	<delete id="deletelogicById" parameterType="String">
+		update t_cms_column
+	    set isused = 0
+	    where C_SID=#{value}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from t_cms_column where C_SID=#{value}
+	</delete>
+	
+	
+</mapper>

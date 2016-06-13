@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TeachGroup">
+   <sql id="dynamicWhere">
+			<where>
+                1=1
+		       <if test="cSid != null"> and C_SID=#{cSid}</if>
+				 <if test="cName != null"> and C_NAME=#{cName}</if>
+				 <if test="cLable != null"> and C_LABLE=#{cLable}</if>
+				 <if test="cExt1 != null"> and C_EXT1=#{cExt1}</if>
+				 <if test="cExt2 != null"> and C_EXT2=#{cExt2}</if>
+				 <if test="cExt3 != null"> and C_EXT3=#{cExt3}</if>
+				 <if test="cIsused != null"> and C_ISUSED=#{cIsused}</if>
+				 <if test="cCreatetime != null"> and C_CREATETIME=#{cCreatetime}</if>
+				 <if test="cUpdatorid != null"> and C_UPDATORID=#{cUpdatorid}</if>
+				 <if test="cModifytime != null"> and C_MODIFYTIME=#{cModifytime}</if>
+				 <if test="cReason != null"> and C_REASON=#{cReason}</if>
+				 <if test="cAgreement != null"> and C_AGREEMENT=#{cAgreement}</if>
+				 <if test="cSortnum != null"> and C_SORTNUM=#{cSortnum}</if>
+				 <if test="cOrderbynum != null"> and C_ORDERBYNUM=#{cOrderbynum}</if>
+				 <if test="cMembernum != null"> and C_MEMBERNUM=#{cMembernum}</if>
+				 <if test="cContentnum != null"> and C_CONTENTNUM=#{cContentnum}</if>
+				 <if test="cUploadimg != null"> and C_UPLOADIMG=#{cUploadimg}</if>
+				 <if test="cOptip != null"> and C_OPTIP=#{cOptip}</if>
+				 <if test="cDesc != null"> and C_DESC=#{cDesc}</if>
+				 <if test="cType != null"> and C_TYPE=#{cType}</if>
+				 <if test="cArea != null"> and C_AREA=#{cArea}</if>
+				 <if test="cLearnD != null"> and C_LEARN_D=#{cLearnD}</if>
+				 <if test="cLearnK != null"> and C_LEARN_K=#{cLearnK}</if>
+				 <if test="cCondition != null"> and C_CONDITION=#{cCondition}</if>
+				 <if test="cAccessCondition != null"> and C_ACCESS_CONDITION=#{cAccessCondition}</if>
+				 <if test="cAuditname != null"> and C_AUDITNAME=#{cAuditname}</if>
+				 <if test="cAudittime != null"> and C_AUDITTIME=#{cAudittime}</if>
+				 <if test="cActivitynum != null"> and C_ACTIVITYNUM=#{cActivitynum}</if>
+				 <if test="cNoticenum != null"> and C_NOTICENUM=#{cNoticenum}</if>
+				 <if test="cVideonum != null"> and C_VIDEONUM=#{cVideonum}</if>
+				</where>
+	</sql>
+		
+	<sql id="dynamicSet">
+		<set>
+						     						<if test="cName != null" > 
+			  C_NAME=#{cName},
+			</if>
+				     						<if test="cLable != null" > 
+			  C_LABLE=#{cLable},
+			</if>
+				     						<if test="cExt1 != null" > 
+			  C_EXT1=#{cExt1},
+			</if>
+				     						<if test="cExt2 != null" > 
+			  C_EXT2=#{cExt2},
+			</if>
+				     						<if test="cExt3 != null" > 
+			  C_EXT3=#{cExt3},
+			</if>
+				     						<if test="cIsused != null" > 
+			  C_ISUSED=#{cIsused},
+			</if>
+				     						<if test="cCreatetime != null" > 
+			  C_CREATETIME=#{cCreatetime},
+			</if>
+				     						<if test="cUpdatorid != null" > 
+			  C_UPDATORID=#{cUpdatorid},
+			</if>
+				     						<if test="cModifytime != null" > 
+			  C_MODIFYTIME=#{cModifytime},
+			</if>
+				     						<if test="cReason != null" > 
+			  C_REASON=#{cReason},
+			</if>
+				     						<if test="cAgreement != null" > 
+			  C_AGREEMENT=#{cAgreement},
+			</if>
+				     						<if test="cSortnum != null" > 
+			  C_SORTNUM=#{cSortnum},
+			</if>
+				     						<if test="cOrderbynum != null" > 
+			  C_ORDERBYNUM=#{cOrderbynum},
+			</if>
+				     						<if test="cMembernum != null" > 
+			  C_MEMBERNUM=#{cMembernum},
+			</if>
+				     						<if test="cContentnum != null" > 
+			  C_CONTENTNUM=#{cContentnum},
+			</if>
+				     						<if test="cUploadimg != null" > 
+			  C_UPLOADIMG=#{cUploadimg},
+			</if>
+				     						<if test="cOptip != null" > 
+			  C_OPTIP=#{cOptip},
+			</if>
+				     						<if test="cDesc != null" > 
+			  C_DESC=#{cDesc},
+			</if>
+				     						<if test="cType != null" > 
+			  C_TYPE=#{cType},
+			</if>
+				     						<if test="cArea != null" > 
+			  C_AREA=#{cArea},
+			</if>
+				     						<if test="cLearnD != null" > 
+			  C_LEARN_D=#{cLearnD},
+			</if>
+				     						<if test="cLearnK != null" > 
+			  C_LEARN_K=#{cLearnK},
+			</if>
+				     						<if test="cCondition != null" > 
+			  C_CONDITION=#{cCondition},
+			</if>
+				     						<if test="cAccessCondition != null" > 
+			  C_ACCESS_CONDITION=#{cAccessCondition},
+			</if>
+				     						<if test="cAuditname != null" > 
+			  C_AUDITNAME=#{cAuditname},
+			</if>
+				     						<if test="cAudittime != null" > 
+			  C_AUDITTIME=#{cAudittime},
+			</if>
+				     						<if test="cActivitynum != null" > 
+			  C_ACTIVITYNUM=#{cActivitynum},
+			</if>
+				     						<if test="cNoticenum != null" > 
+			  C_NOTICENUM=#{cNoticenum},
+			</if>
+				     						<if test="cVideonum != null" > 
+			  C_VIDEONUM=#{cVideonum},
+			</if>
+				     		</set>
+	</sql>
+	
+	<sql id="allColumn">
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+						<if test="cSid != null"> C_SID,</if>
+						<if test="cName != null"> C_NAME,</if>
+						<if test="cLable != null"> C_LABLE,</if>
+						<if test="cExt1 != null"> C_EXT1,</if>
+						<if test="cExt2 != null"> C_EXT2,</if>
+						<if test="cExt3 != null"> C_EXT3,</if>
+						<if test="cIsused != null"> C_ISUSED,</if>
+						<if test="cCreatetime != null"> C_CREATETIME,</if>
+						<if test="cUpdatorid != null"> C_UPDATORID,</if>
+						<if test="cModifytime != null"> C_MODIFYTIME,</if>
+						<if test="cReason != null"> C_REASON,</if>
+						<if test="cAgreement != null"> C_AGREEMENT,</if>
+						<if test="cSortnum != null"> C_SORTNUM,</if>
+						<if test="cOrderbynum != null"> C_ORDERBYNUM,</if>
+						<if test="cMembernum != null"> C_MEMBERNUM,</if>
+						<if test="cContentnum != null"> C_CONTENTNUM,</if>
+						<if test="cUploadimg != null"> C_UPLOADIMG,</if>
+						<if test="cOptip != null"> C_OPTIP,</if>
+						<if test="cDesc != null"> C_DESC,</if>
+						<if test="cType != null"> C_TYPE,</if>
+						<if test="cArea != null"> C_AREA,</if>
+						<if test="cLearnD != null"> C_LEARN_D,</if>
+						<if test="cLearnK != null"> C_LEARN_K,</if>
+						<if test="cCondition != null"> C_CONDITION,</if>
+						<if test="cAccessCondition != null"> C_ACCESS_CONDITION,</if>
+						<if test="cAuditname != null"> C_AUDITNAME,</if>
+						<if test="cAudittime != null"> C_AUDITTIME,</if>
+						<if test="cActivitynum != null"> C_ACTIVITYNUM,</if>
+						<if test="cNoticenum != null"> C_NOTICENUM,</if>
+						<if test="cVideonum != null"> C_VIDEONUM,</if>
+				</trim>
+	</sql>
+	
+	<sql id="allColumnVar">
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    			<if test="cSid != null"> #{cSid},</if>
+						<if test="cName != null"> #{cName},</if>
+						<if test="cLable != null"> #{cLable},</if>
+						<if test="cExt1 != null"> #{cExt1},</if>
+						<if test="cExt2 != null"> #{cExt2},</if>
+						<if test="cExt3 != null"> #{cExt3},</if>
+						<if test="cIsused != null"> #{cIsused},</if>
+						<if test="cCreatetime != null"> #{cCreatetime},</if>
+						<if test="cUpdatorid != null"> #{cUpdatorid},</if>
+						<if test="cModifytime != null"> #{cModifytime},</if>
+						<if test="cReason != null"> #{cReason},</if>
+						<if test="cAgreement != null"> #{cAgreement},</if>
+						<if test="cSortnum != null"> #{cSortnum},</if>
+						<if test="cOrderbynum != null"> #{cOrderbynum},</if>
+						<if test="cMembernum != null"> #{cMembernum},</if>
+						<if test="cContentnum != null"> #{cContentnum},</if>
+						<if test="cUploadimg != null"> #{cUploadimg},</if>
+						<if test="cOptip != null"> #{cOptip},</if>
+						<if test="cDesc != null"> #{cDesc},</if>
+						<if test="cType != null"> #{cType},</if>
+						<if test="cArea != null"> #{cArea},</if>
+						<if test="cLearnD != null"> #{cLearnD},</if>
+						<if test="cLearnK != null"> #{cLearnK},</if>
+						<if test="cCondition != null"> #{cCondition},</if>
+						<if test="cAccessCondition != null"> #{cAccessCondition},</if>
+						<if test="cAuditname != null"> #{cAuditname},</if>
+						<if test="cAudittime != null"> #{cAudittime},</if>
+						<if test="cActivitynum != null"> #{cActivitynum},</if>
+						<if test="cNoticenum != null"> #{cNoticenum},</if>
+						<if test="cVideonum != null"> #{cVideonum},</if>
+				</trim>
+	</sql>
+	
+	<insert id="insert"  parameterType="com.tsb.ischool.challenge.model.TeachGroup">
+		insert into t_teach_group
+		<include refid="allColumn"/>
+		<include refid="allColumnVar"/>
+	</insert>
+	
+	<update id="update" parameterType="com.tsb.ischool.challenge.model.TeachGroup">
+	     update t_teach_group
+	     <include refid="dynamicSet"/>
+	     where C_SID=#{cSid}
+	</update>
+	
+	<select id="queryById" parameterType="String" resultType="com.tsb.ischool.challenge.model.TeachGroup" >
+		select 
+			*
+		from 
+			t_teach_group 
+		where C_SID=#{value}
+	</select>
+	
+	<select id="query" parameterType="com.tsb.ischool.challenge.webservice.c2sbean.C2STeachGroup" resultType="com.tsb.ischool.challenge.model.TeachGroup">
+		select 
+			*
+		from
+			 t_teach_group 
+		<include refid="dynamicWhere"/>
+	</select>
+	
+	<select id="query_count" parameterType="com.tsb.ischool.challenge.webservice.c2sbean.C2STeachGroup" resultType="int">
+		select 
+			count(1)
+		from 
+			t_teach_group
+		<include refid="dynamicWhere"/>
+	</select>
+	
+	<delete id="deletelogicById" parameterType="String">
+		update t_teach_group
+	    set isused = 0
+	    where C_SID=#{value}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from t_teach_group where C_SID=#{value}
+	</delete>
+	
+	
+</mapper>

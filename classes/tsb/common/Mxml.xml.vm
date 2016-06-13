@@ -1,0 +1,110 @@
+## This is an the velocity template
+## to generate a model class from an sql table input
+#set ($table = $sqlTable.Table.toLowerCase())
+#set ($class = $utility.makeClassName($sqlTable.Table))
+#set ($pojoClass = $sqlTable.EntityName)
+#set ($classVar = $utility.makeFirstLetterLowerCase($class))
+#set ($pojoClassVar = $utility.makeFirstLetterLowerCase($pojoClass))
+#set ($packagePrefix  = $prop.getProperty("packagePrefix"))
+#set ($packageModot  = $prop.getProperty("packageModot"))
+#set ($keyColumn = $sqlTable.getPrimaryKey(0))
+#set ($keyfield = $sqlTable.getPrimaryKey(0).getColname())
+#set ($keyVar= $utility.makeVarName($keyfield))
+#set ($keyType= $keyColumn.attType)
+#set ($mailId    = $prop.getProperty("mailId"))
+#set ($mailName  = $prop.getProperty("mailName"))
+#set ($keyGenerated = "N")
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${pojoClass}">
+   <sql id="dynamicWhere">
+			<where>
+                1=1
+#foreach( $column in $sqlTable.sqlColumns)
+	#if ($column.isKey())
+	       <if test="$column.attName != null"> and $column.Colname=#{$column.attName}</if>
+	#else
+		 <if test="$column.attName != null"> and $column.Colname=#{$column.attName}</if>
+	#end
+#end
+			</where>
+	</sql>
+		
+	<sql id="dynamicSet">
+		<set>
+		#foreach( $column in $sqlTable.sqlColumns)
+			#if (!$column.isKey())
+			<if test="$column.attName != null" > 
+			  $column.Colname=#{$column.attName},
+			</if>
+			#end
+	     #end
+		</set>
+	</sql>
+	
+	<sql id="allColumn">
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+			#foreach( $column in $sqlTable.sqlColumns)
+			<if test="$column.attName != null"> $column.Colname,</if>
+			#end
+	</trim>
+	</sql>
+	
+	<sql id="allColumnVar">
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    #foreach( $column in $sqlTable.sqlColumns)
+			<if test="$column.attName != null"> #{$column.attName},</if>
+			#end
+	</trim>
+	</sql>
+	
+	<insert id="insert"  parameterType="${packagePrefix}.model.${pojoClass}">
+		insert into ${table}
+		<include refid="allColumn"/>
+		<include refid="allColumnVar"/>
+	</insert>
+	
+	<update id="update" parameterType="${packagePrefix}.model.${pojoClass}">
+	     update ${table}
+	     <include refid="dynamicSet"/>
+	     where ${keyfield}=#{${keyVar}}
+	</update>
+	
+	<select id="queryById" parameterType="String" resultType="${packagePrefix}.model.${pojoClass}" >
+		select 
+			*
+		from 
+			${table} 
+		where ${keyfield}=#{value}
+	</select>
+	
+	<select id="query" parameterType="${packagePrefix}.webservice.c2sbean.C2S${pojoClass}" resultType="${packagePrefix}.model.${pojoClass}">
+		select 
+			*
+		from
+			 ${table} 
+		<include refid="dynamicWhere"/>
+	</select>
+	
+	<select id="query_count" parameterType="${packagePrefix}.webservice.c2sbean.C2S${pojoClass}" resultType="int">
+		select 
+			count(1)
+		from 
+			${table}
+		<include refid="dynamicWhere"/>
+	</select>
+	
+	<delete id="deletelogicById" parameterType="String">
+		update ${table}
+	    set isused = 0
+	    where ${keyfield}=#{value}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from ${table} where ${keyfield}=#{value}
+	</delete>
+	
+	
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!-- =============================================================== -->
+<!-- Ant build file to run appfusegen                                -->
+<!-- =============================================================== -->
+<project name="tsbcodegen" default="generate" basedir=".">
+    <property name="lib" value="${basedir}/lib"/>
+    <property name="dir.src" value="${basedir}/JavaSource"/>
+    <property name="dir.build" value="${basedir}/bin"/>
+    <property name="dist.lib" value="./www"/>
+    <property name="sqlFile" value="${basedir}/sql/newtables.sql"/>
+    <property name="jarFile" value="tsbcodegen"/>
+    <property name="zipFile" value="tsbcodegen"/>
+    <property name="zipVersion" value="1.0"/>
+    <loadproperties srcFile=".\properties\tsb\generator.properties"/>
+    <condition property="isStruts">
+        <and>
+            <isset property="velocityListStruts"/>
+        </and>
+    </condition>    
+    <condition property="isJsf">
+        <and>
+            <isset property="velocityListJsf"/>
+        </and>
+    </condition>    
+
+    <!-- ============================================================= -->
+    <!-- Execute appfusegen from jar                                   -->
+    <!-- ============================================================= -->
+    <target name="generate">
+        <java classname="com.codegenerator.runner.AppFuseGenerator" fork="true">
+            <classpath>
+                <pathelement location="${basedir}\"/>
+				<pathelement location="${basedir}/bin"/>
+                <pathelement location="${basedir}\properties\"/>
+				<pathelement location="${basedir}\templates\"/>
+                <!--pathelement location="${basedir}\appfusegen.jar"/-->
+            	<pathelement location="classes"/>            	 
+                <fileset dir="${lib}">
+                    <include name="**.jar"/>
+                </fileset>
+            </classpath>
+            <arg value="@${framework}Tables"/>
+            <arg value="sys=${framework}"/>
+        </java>
+    </target>
+
+    <!-- ============================================================= -->
+    <!-- Execute sql file                                              -->
+    <!-- ============================================================= -->
+    <target name="create-tables">
+        <sql print="true"
+             driver="${jdbcDriver}"
+             url="${dbUrl}"
+             userid=""
+             password="">
+            <transaction src="${sqlFile}"/>
+        </sql>
+    </target>
+
+    <!-- ============================================================= -->
+    <!-- Create appfusegen jar file                                    -->
+    <!-- ============================================================= -->
+    <target name="jar" description="Create Jar File" depends="compile">
+        <delete file="${basedir}/${jarFile}.jar"/>
+        <jar destfile="${basedir}/${jarFile}.jar">
+            <fileset dir="${dir.build}"
+                     excludes="**/*.properties">
+            </fileset>
+        </jar>
+    </target>
+    <!-- ============================================================= -->
+    <!-- compile appfusegen java source                                -->
+    <!-- ============================================================= -->
+    <target name="compile" description="compile">
+        <javac srcdir="${dir.src}" destdir="${dir.build}">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+    <!-- ============================================================= -->
+    <!-- Create appfusegen zip file for distribution                   -->
+    <!-- ============================================================= -->
+    <target name="zip" description="Create Zip file" depends="jar">
+        <delete file="${dist.lib}/${zipFile}.${zipVersion}.zip"/>
+        <zip destfile="${dist.lib}/${zipFile}.${zipVersion}.zip"
+             basedir="${basedir}"
+             excludes="*.log, *.zip"
+                />
+    </target>
+    
+    
+    
+</project>

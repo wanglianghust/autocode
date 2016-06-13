@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.views.problem">
+		<section name="filter">
+			<item key="selectBySeverity" value="false"/>
+			<item key="contains" value="true"/>
+			<item key="selectionStatus" value="org.eclipse.core.resources.problemmarker:true:org.springframework.ide.eclipse.core.problemmarker:true:org.springframework.ide.eclipse.beans.core.problemmarker:true:org.eclipse.ant.ui.buildFileProblem:true:org.eclipse.jdt.core.problem:true:com.genuitec.eclipse.jsf.validationMarker:true:com.iw.plugins.spindle.core.problemmarker:true:com.iw.plugins.spindle.core.fatalproblemmarker:true:com.iw.plugins.spindle.core.problemmarker.source:true:com.iw.plugins.spindle.core.buildBroken:true:org.eclipse.emf.ecore.diagnostic:true:com.genuitec.eclipse.ast.deploy.core.problemmarker:true:com.genuitec.eclipsetidy.tidyMarker:true:org.eclipse.xsd.diagnostic:true:com.genuitec.eclipse.j2eedt.core.deploymentdescriptormarker:true:org.eclipse.pde.validation-marker:true:org.eclipse.wst.validation.problemmarker:true:org.eclipse.jst.j2ee.EARValidatorMarker:true:org.eclipse.jst.j2ee.ejb.EJBValidatorMarker:true:org.eclipse.jdt.core.buildpath_problem:true:com.genuitec.eclipse.struts.StrutsConfigError:true:com.genuitec.eclipse.j2eedt.core.problemmarker:true:com.genuitec.eclipse.j2eedt.core.libmarker:true:com.ibm.etools.validation.problemmarker:true:"/>
+			<item key="enabled" value="true"/>
+			<item key="severity" value="0"/>
+			<item key="description" value=""/>
+			<item key="filterOnMarkerLimit" value="true"/>
+			<item key="markerLimit" value="100"/>
+			<item key="onResource" value="0"/>
+		</section>
+		<section name="sorter">
+			<item key="defaultDirection2" value="1"/>
+			<item key="priority6" value="6"/>
+			<item key="defaultDirection1" value="1"/>
+			<item key="direction5" value="1"/>
+			<item key="defaultPriority3" value="4"/>
+			<item key="priority4" value="1"/>
+			<item key="direction4" value="1"/>
+			<item key="direction1" value="1"/>
+			<item key="defaultDirection4" value="1"/>
+			<item key="priority0" value="0"/>
+			<item key="defaultPriority1" value="3"/>
+			<item key="priority2" value="2"/>
+			<item key="direction6" value="1"/>
+			<item key="priority3" value="4"/>
+			<item key="defaultPriority0" value="0"/>
+			<item key="direction3" value="1"/>
+			<item key="defaultDirection6" value="1"/>
+			<item key="priority1" value="3"/>
+			<item key="priority5" value="5"/>
+			<item key="defaultDirection5" value="1"/>
+			<item key="direction2" value="1"/>
+			<item key="defaultPriority2" value="2"/>
+			<item key="defaultPriority5" value="5"/>
+			<item key="defaultPriority6" value="6"/>
+			<item key="defaultPriority4" value="1"/>
+			<item key="direction0" value="-1"/>
+			<item key="defaultDirection0" value="-1"/>
+			<item key="defaultDirection3" value="1"/>
+		</section>
+	</section>
+</section>

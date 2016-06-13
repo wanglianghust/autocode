@@ -1,0 +1,85 @@
+## This is a velocity template
+## to generate a model class from an sql table input
+#set ($table = $sqlTable.Table)
+#set ($class = $sqlTable.EntityName)
+#set ($classVar = $utility.makeFirstLetterLowerCase($class))
+#set ($packagePrefix  = $prop.getProperty("packagePrefix"))
+#set ($packageModot  = $prop.getProperty("packageModot"))
+#set ($keyColumn = $sqlTable.getPrimaryKey(0))
+#set ($keyfield = $sqlTable.getPrimaryKey(0).getColname())
+#set ($keyVar= $utility.makeVarName($keyfield))
+#set ($keyType= $keyColumn.attType)
+#set ($mailId    = $prop.getProperty("mailId"))
+#set ($mailName  = $prop.getProperty("mailName"))
+ /**
+  #parse( "copyright_file.vm" )
+  
+ * 文件名称: I${pojoClass}DAO.java 
+ * 设计作者: 
+ * 完成日期: 
+ * 内容摘要:
+ *
+ * 修改记录: 
+ * 修改日期:
+ * 修 改 人:
+ * 修改内容:
+ */
+
+package ${packagePrefix}.dao;
+
+import ${packagePrefix}.model.${class};
+import com.tsb.ischool.challenge.webservice.c2sbean.C2S${class};
+import com.tsb.ischool.framework.bean.comm.PageBean;
+
+/**
+ * 类 名 称：I${class}Dao
+ * 内容摘要：
+ * 完成日期：
+ * 编码作者：
+ */
+public interface I${class}Dao
+{
+
+ 	/**
+	 * 新增${class}
+	 * @param ${class} bean
+	 * @return
+	 */
+	public int insert(${class} bean);
+	
+	
+	/**
+	 * 编辑${class}
+	 * @param ${class} bean
+	 * @return
+	 */
+	public int update(${class} bean);
+	
+	/**
+	 * 通过${class}主键查询$class信息
+	 * @param  $keyVar  ${class}主键
+	 * @return ${class}
+	 */
+	public ${class} queryById(String $keyVar);
+	
+	/**
+	 * 删除${class}通过主键
+	 * @param   $keyVar  ${class}主键
+	 * @return
+	 */
+	public int deleteById(String $keyVar);
+	
+	/**
+	 * 逻辑删除${class}通过主键
+	 * @param   $keyVar  ${class}主键
+	 * @return
+	 */
+	public int deletelogicById(String $keyVar);
+	
+	/**
+	 * 查询${class}
+	 * @param C2S${class} bean
+	 * @return
+	 */
+	public PageBean<${class}> query(C2S${class} bean);
+}

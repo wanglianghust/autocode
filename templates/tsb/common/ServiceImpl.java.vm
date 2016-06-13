@@ -1,0 +1,119 @@
+## This is a velocity template
+## to generate a model class from an sql table input
+#set ($table = $sqlTable.Table)
+#set ($class = $sqlTable.EntityName)
+#set ($classVar = $utility.makeFirstLetterLowerCase($class))
+#set ($packagePrefix  = $prop.getProperty("packagePrefix"))
+#set ($packageModot  = $prop.getProperty("packageModot"))
+#set ($appname  = $prop.getProperty("appname"))
+#set ($keyfield = $sqlTable.getPrimaryKey(0).getColname())
+#set ($keytype  = $sqlTable.getPrimaryKey(0).getAttType())
+#set ($keyVar= $utility.makeVarName($keyfield))
+#set ($keyVarUC = $utility.makeFirstLetterUpperCase($keyVar))
+/**
+ #parse( "copyright_file.vm" )
+ 
+ * 文件名称: ${class}ServiceImpl.java 
+ * 设计作者: 
+ * 完成日期: 
+ * 内容摘要:
+ *
+ * 修改记录: 
+ * 修改日期:
+ * 修 改 人:
+ * 修改内容:
+ */
+package ${packagePrefix}.service.impl;
+
+import javax.annotation.Resource;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+import ${packagePrefix}.dao.I${class}Dao;
+import ${packagePrefix}.model.${class};
+import ${packagePrefix}.service.I${class}Service;
+import ${packagePrefix}.webservice.c2sbean.C2S${class};
+import com.tsb.ischool.framework.bean.comm.PageBean;
+import com.tsb.ischool.framework.common.ISchoolConstants;
+
+/**
+ * 类 编 号： 
+ * 类 名 称：${class}ServiceImpl
+ * 内容摘要：
+ * 完成日期：
+ * 编码作者：
+ */
+@Service("${classVar}Service")
+public class ${class}ServiceImpl implements I${class}Service
+{
+   private Logger logger = Logger.getLogger(this.getClass().getName());
+	
+	@Resource
+	private I${class}Dao ${classVar}Dao;
+	
+	
+	@Override
+	public int insert(${class} bean) {
+		String operation = ISchoolConstants.LOGGER_PREFIX_DEBUG + "THREADID = "
+				+ Thread.currentThread().getId() + ".|新增 ${appname}${class}.|bean="
+				+ bean.toString() + ".|";
+		logger.debug(operation + "开始.|");
+		int result =${classVar}Dao.insert(bean);
+		logger.debug(operation + "结束.|");
+		return result;
+	}
+	
+	@Override
+	public int update(${class} bean) {
+		String operation = ISchoolConstants.LOGGER_PREFIX_DEBUG + "THREADID = "
+				+ Thread.currentThread().getId() + ".|修改${appname}${class}.|bean="
+				+ bean.toString() + ".|";
+		logger.debug(operation + "开始.|");
+		int result = ${classVar}Dao.update(bean);
+		logger.debug(operation + "结束.|");
+		return result;
+	}
+	@Override
+	public ${class} queryById(String pkid) {
+		String operation = ISchoolConstants.LOGGER_PREFIX_DEBUG + "THREADID = "
+				+ Thread.currentThread().getId() + ".|按id查询${appname}${class}.|bean="
+				+ pkid + ".|";
+		logger.debug(operation + "开始.|");
+		${class} ${classVar} = ${classVar}Dao.queryById(pkid);
+		logger.debug(operation + "结束.|");
+		return ${classVar};
+	}
+	
+	@Override
+	public int deleteById(String pkid) {
+		String operation = ISchoolConstants.LOGGER_PREFIX_DEBUG + "THREADID = "
+				+ Thread.currentThread().getId() + ".|删除${appname}${class}.|bean="
+				+ pkid + ".|";
+		logger.debug(operation + "开始.|");
+		int result = ${classVar}Dao.deleteById(pkid);
+		logger.debug(operation + "结束.|");
+		return result;
+	}
+	
+	@Override
+	public int deletelogicById(String pkid) {
+		String operation = ISchoolConstants.LOGGER_PREFIX_DEBUG + "THREADID = "
+				+ Thread.currentThread().getId() + ".|逻辑删除${appname}${class}.|bean="
+				+ pkid + ".|";
+		logger.debug(operation + "开始.|");
+		int result = ${classVar}Dao.deletelogicById(pkid);
+		logger.debug(operation + "结束.|");
+		return result;
+	}
+	
+	@Override
+	public PageBean<${class}> query(C2S${class} bean) {
+		String operation = ISchoolConstants.LOGGER_PREFIX_DEBUG + "THREADID = "
+				+ Thread.currentThread().getId() + ".|查询${appname}${class}.|bean="
+				+ bean.toString() + ".|";
+		logger.debug(operation + "开始.|");
+		PageBean<${class}> pageBean = ${classVar}Dao.query(bean);
+		logger.debug(operation + "结束.|");
+		return pageBean;
+	}
+	
+}

@@ -1,0 +1,96 @@
+## This is a velocity template
+## to generate a model class from an sql table input
+#set ($table = $sqlTable.Table)
+#set ($class2 = $utility.makeClassName($sqlTable.EntityName))
+#set ($class = $sqlTable.EntityName)
+#set ($classVar = $utility.makeFirstLetterLowerCase($class))
+#set ($packagePrefix  = $prop.getProperty("packagePrefix"))
+#set ($packageModot  = $prop.getProperty("packageModot"))
+#set ($keyfield = $sqlTable.getPrimaryKey(0).getColname())
+#set ($keytype  = $sqlTable.getPrimaryKey(0).getAttType())
+#set ($keyVar= $utility.makeVarName($keyfield))
+#set ($keyVarUC = $utility.makeFirstLetterUpperCase($keyVar))
+/**
+ #parse( "copyright_file.vm" )
+ 
+ * 文件名称: ${class}DaoImpl.java 
+ * 设计作者: 
+ * 完成日期: 
+ * 内容摘要:
+ *
+ * 修改记录: 
+ * 修改日期:
+ * 修 改 人:
+ * 修改内容:
+ */
+package ${packagePrefix}.dao.impl;
+
+import org.springframework.stereotype.Repository;
+import ${packagePrefix}.dao.I${class}Dao;
+import ${packagePrefix}.model.${class};
+import ${packagePrefix}.webservice.c2sbean.C2S${class};
+import com.tsb.ischool.framework.bean.comm.PageBean;
+import com.tsb.ischool.framework.common.ISchoolConstants;
+import com.tsb.ischool.framework.dao.MybatisDao;
+import org.apache.log4j.Logger;
+
+/**
+ * 类 名 称：${class}DaoImpl.java
+ * 内容摘要：
+ * 完成日期：
+ * 编码作者：
+ */
+@Repository("${classVar}Dao")
+public class ${class}DaoImpl extends MybatisDao implements I${class}Dao
+{
+    private static Logger logger = Logger.getLogger(${class}DaoImpl.class);
+
+	@Override
+	public int insert(${class} bean) {
+		String operation =ISchoolConstants.LOGGER_PREFIX_INFO+ "THREADID = "+Thread.currentThread().getId()+".|Mapper-method:";
+		String method = "${class}.insert";
+		logger.info(operation + method + ".|");
+		return insert(method, bean);
+	}
+
+	@Override
+	public int update(${class} bean) {
+		String operation =ISchoolConstants.LOGGER_PREFIX_INFO+ "THREADID = "+Thread.currentThread().getId()+".|Mapper-method:";
+		String method = "${class}.update";
+		logger.info(operation + method + ".|");
+		return update(method, bean);
+	}
+
+	@Override
+	public ${class} queryById(String pkid) {
+		String operation =ISchoolConstants.LOGGER_PREFIX_INFO+ "THREADID = "+Thread.currentThread().getId()+".|Mapper-method:";
+		String method = "${class}.queryById";
+		logger.info(operation + method + ".|");
+		return (${class})selectOne(method, pkid);
+	}
+
+	@Override
+	public int deleteById(String pkid) {
+		String operation =ISchoolConstants.LOGGER_PREFIX_INFO+ "THREADID = "+Thread.currentThread().getId()+".|Mapper-method:";
+		String method = "${class}.deleteById";
+		logger.info(operation + method + ".|");
+		return delete(method, pkid);
+	}
+
+	@Override
+	public int deletelogicById(String pkid) {
+		String operation =ISchoolConstants.LOGGER_PREFIX_INFO+ "THREADID = "+Thread.currentThread().getId()+".|Mapper-method:";
+		String method = "${class}.deletelogicById";
+		logger.info(operation + method + ".|");
+		return update(method, pkid);
+	}
+
+	@Override
+	public PageBean<${class}> query(C2S${class} bean) {
+		String operation =ISchoolConstants.LOGGER_PREFIX_INFO+ "THREADID = "+Thread.currentThread().getId()+".|Mapper-method:";
+		String method = "${class}.query";
+		logger.info(operation + method + ".|");
+		return selectPage(method, bean, bean.getCurpage(), bean.getPagesize());
+	}
+
+}

@@ -1,0 +1,84 @@
+## This is a velocity template
+## to generate a model class from an sql table input
+#set ($table = $sqlTable.Table)
+#set ($class = $sqlTable.EntityName)
+#set ($classVar = $utility.makeFirstLetterLowerCase($class))
+#set ($packagePrefix  = $prop.getProperty("packagePrefix"))
+#set ($packageModot  = $prop.getProperty("packageModot"))
+#set ($keyfield = $sqlTable.getPrimaryKey(0).getColname())
+#set ($keytype  = $sqlTable.getPrimaryKey(0).getAttType())
+#set ($keyVar= $utility.makeVarName($keyfield))
+#set ($keyVarUC = $utility.makeFirstLetterUpperCase($keyVar))
+/**
+ #parse( "copyright_file.vm" )
+ 
+ * 文件名称: I${class}Service.java 
+ * 设计作者: 
+ * 完成日期: 
+ * 内容摘要:
+ *
+ * 修改记录: 
+ * 修改日期:
+ * 修 改 人:
+ * 修改内容:
+ */
+package ${packagePrefix}.service;
+
+import ${packagePrefix}.model.${class};
+import ${packagePrefix}.webservice.c2sbean.C2S${class};
+import com.tsb.ischool.framework.bean.comm.PageBean;
+
+/**
+ * 类 编 号： 
+ * 类 名 称：I${class}Service
+ * 内容摘要：
+ * 完成日期：
+ * 编码作者：
+ */
+public interface I${class}Service
+{
+ 
+    /**
+	 * 新增${class}
+	 * @param ${class}
+	 * @return
+	 */
+	public int insert(${class} bean);
+	
+	
+	/**
+	 * 编辑${class}
+	 * @param ${class}
+	 * @return
+	 */
+	public int update(${class} bean);
+	
+	/**
+	 * 获取${class}通过主键
+	 * @param pkid
+	 * @return
+	 */
+	public ${class} queryById(String pkid);
+	
+	/**
+	 * 删除${class}通过主键
+	 * @param ${class}
+	 * @return
+	 */
+	public int deleteById(String pkid);
+	
+	/**
+	 * 逻辑删除${class}通过主键
+	 * @param ${class}
+	 * @return
+	 */
+	public int deletelogicById(String pkid);
+	
+	/**
+	 * 查询${class}
+	 * @param C2S${class}
+	 * @return
+	 */
+	public PageBean<${class}> query(C2S${class} bean);
+ 	
+}

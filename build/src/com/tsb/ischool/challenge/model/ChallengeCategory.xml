@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ChallengeCategory">
+   <sql id="dynamicWhere">
+			<where>
+                1=1
+		       <if test="categoryid != null"> and categoryid=#{categoryid}</if>
+				 <if test="vtype != null"> and vtype=#{vtype}</if>
+				 <if test="title != null"> and title=#{title}</if>
+				 <if test="vcode != null"> and vcode=#{vcode}</if>
+				 <if test="subcount != null"> and subcount=#{subcount}</if>
+				 <if test="parentid != null"> and parentid=#{parentid}</if>
+				 <if test="ordernum != null"> and ordernum=#{ordernum}</if>
+				 <if test="isused != null"> and isused=#{isused}</if>
+				 <if test="createid != null"> and createid=#{createid}</if>
+				 <if test="createtime != null"> and createtime=#{createtime}</if>
+				 <if test="updatorid != null"> and updatorid=#{updatorid}</if>
+				 <if test="updatortime != null"> and updatortime=#{updatortime}</if>
+				 <if test="optip != null"> and optip=#{optip}</if>
+				 <if test="ext1 != null"> and ext1=#{ext1}</if>
+				 <if test="ext2 != null"> and ext2=#{ext2}</if>
+				 <if test="ext3 != null"> and ext3=#{ext3}</if>
+				 <if test="business != null"> and business=#{business}</if>
+				</where>
+	</sql>
+		
+	<sql id="dynamicSet">
+		<set>
+						     						<if test="vtype != null" > 
+			  vtype=#{vtype},
+			</if>
+				     						<if test="title != null" > 
+			  title=#{title},
+			</if>
+				     						<if test="vcode != null" > 
+			  vcode=#{vcode},
+			</if>
+				     						<if test="subcount != null" > 
+			  subcount=#{subcount},
+			</if>
+				     						<if test="parentid != null" > 
+			  parentid=#{parentid},
+			</if>
+				     						<if test="ordernum != null" > 
+			  ordernum=#{ordernum},
+			</if>
+				     						<if test="isused != null" > 
+			  isused=#{isused},
+			</if>
+				     						<if test="createid != null" > 
+			  createid=#{createid},
+			</if>
+				     						<if test="createtime != null" > 
+			  createtime=#{createtime},
+			</if>
+				     						<if test="updatorid != null" > 
+			  updatorid=#{updatorid},
+			</if>
+				     						<if test="updatortime != null" > 
+			  updatortime=#{updatortime},
+			</if>
+				     						<if test="optip != null" > 
+			  optip=#{optip},
+			</if>
+				     						<if test="ext1 != null" > 
+			  ext1=#{ext1},
+			</if>
+				     						<if test="ext2 != null" > 
+			  ext2=#{ext2},
+			</if>
+				     						<if test="ext3 != null" > 
+			  ext3=#{ext3},
+			</if>
+				     						<if test="business != null" > 
+			  business=#{business},
+			</if>
+				     		</set>
+	</sql>
+	
+	<sql id="allColumn">
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+						<if test="categoryid != null"> categoryid,</if>
+						<if test="vtype != null"> vtype,</if>
+						<if test="title != null"> title,</if>
+						<if test="vcode != null"> vcode,</if>
+						<if test="subcount != null"> subcount,</if>
+						<if test="parentid != null"> parentid,</if>
+						<if test="ordernum != null"> ordernum,</if>
+						<if test="isused != null"> isused,</if>
+						<if test="createid != null"> createid,</if>
+						<if test="createtime != null"> createtime,</if>
+						<if test="updatorid != null"> updatorid,</if>
+						<if test="updatortime != null"> updatortime,</if>
+						<if test="optip != null"> optip,</if>
+						<if test="ext1 != null"> ext1,</if>
+						<if test="ext2 != null"> ext2,</if>
+						<if test="ext3 != null"> ext3,</if>
+						<if test="business != null"> business,</if>
+				</trim>
+	</sql>
+	
+	<sql id="allColumnVar">
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		    			<if test="categoryid != null"> #{categoryid},</if>
+						<if test="vtype != null"> #{vtype},</if>
+						<if test="title != null"> #{title},</if>
+						<if test="vcode != null"> #{vcode},</if>
+						<if test="subcount != null"> #{subcount},</if>
+						<if test="parentid != null"> #{parentid},</if>
+						<if test="ordernum != null"> #{ordernum},</if>
+						<if test="isused != null"> #{isused},</if>
+						<if test="createid != null"> #{createid},</if>
+						<if test="createtime != null"> #{createtime},</if>
+						<if test="updatorid != null"> #{updatorid},</if>
+						<if test="updatortime != null"> #{updatortime},</if>
+						<if test="optip != null"> #{optip},</if>
+						<if test="ext1 != null"> #{ext1},</if>
+						<if test="ext2 != null"> #{ext2},</if>
+						<if test="ext3 != null"> #{ext3},</if>
+						<if test="business != null"> #{business},</if>
+				</trim>
+	</sql>
+	
+	<insert id="insert"  parameterType="com.tsb.ischool.challenge.model.ChallengeCategory">
+		insert into t_challenge_category
+		<include refid="allColumn"/>
+		<include refid="allColumnVar"/>
+	</insert>
+	
+	<update id="update" parameterType="com.tsb.ischool.challenge.model.ChallengeCategory">
+	     update t_challenge_category
+	     <include refid="dynamicSet"/>
+	     where categoryid=#{categoryid}
+	</update>
+	
+	<select id="queryById" parameterType="String" resultType="com.tsb.ischool.challenge.model.ChallengeCategory" >
+		select 
+			*
+		from 
+			t_challenge_category 
+		where categoryid=#{value}
+	</select>
+	
+	<select id="query" parameterType="com.tsb.ischool.challenge.webservice.c2sbean.C2SChallengeCategory" resultType="com.tsb.ischool.challenge.model.ChallengeCategory">
+		select 
+			*
+		from
+			 t_challenge_category 
+		<include refid="dynamicWhere"/>
+	</select>
+	
+	<select id="query_count" parameterType="com.tsb.ischool.challenge.webservice.c2sbean.C2SChallengeCategory" resultType="int">
+		select 
+			count(1)
+		from 
+			t_challenge_category
+		<include refid="dynamicWhere"/>
+	</select>
+	
+	<delete id="deletelogicById" parameterType="String">
+		update t_challenge_category
+	    set isused = 0
+	    where categoryid=#{value}
+	</delete>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from t_challenge_category where categoryid=#{value}
+	</delete>
+	
+	
+</mapper>
