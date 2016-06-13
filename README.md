@@ -3,7 +3,7 @@ java代码生成器
 
 #使用说明
 
-1.在 tsb_codegen\properties\generator.properties 
+1.在 tsb_codegen\properties\generator.properties
 里面对dbUrl，jdbcDriver，和userName pass, schema 作修改,因为你连接的是不同的数据库
 
 dbUserid=tsb
@@ -34,11 +34,11 @@ packagePrefix=com.test
 5.执行后，代码在tsb_codegen\build 下面
 
 6.代码结构
-	src\dao
-	src\model
-	src\service
-	src\webservice
-	
+    src\dao
+    src\model
+    src\service
+    src\webservice
+    
 #二次开发
 ```
 autocode/
@@ -52,3 +52,5 @@ autocode/
     └── Mxml.xml.vm                  。。。
 
 ```
+
+
